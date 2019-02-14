@@ -1,0 +1,3 @@
+1523036886218	Extract local variable 'scanner'
+1523037163983	Convert local variable 'scanner' to field
+1523037342247	Extract local variable 'scanner2'

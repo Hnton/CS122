@@ -1,0 +1,36 @@
+/**
+ * Manage players and bets, and play the game
+ * @author Mikael Hinton
+ *
+ */
+public class Table{
+	
+	// An Int that holds the bets from both players for each hand. 
+	//		Will initially be 0
+	private int pot = 0;
+	// A two element array of Player objects. 
+	//		One is the dealer, and the other is the player
+	int[] players = new int[2];
+	//
+	public static int bet;
+	
+	
+	public int declareWinner()
+	{
+		
+	}
+
+	public void show()
+	{
+		
+	}
+	
+	public void getBets()
+	{
+	}
+	
+	public void play()
+	{
+		
+	}	
+}//EOF

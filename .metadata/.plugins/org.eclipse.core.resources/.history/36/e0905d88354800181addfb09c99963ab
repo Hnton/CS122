@@ -1,0 +1,43 @@
+
+
+/**
+ * Represents the dealer in a Poker game
+ * @author Mikael Hinton
+ *
+ */
+public class Dealer extends Player{
+
+	// A deck of cards
+	Deck deck = new Deck();
+//HELP
+	/**
+	 * Default Constructor
+	 */
+	Dealer()
+	{
+		super(name, stash);
+		name = "Dealer";
+		
+	}
+//HELP
+	/**
+	 * Overloaded Constructor
+	 * @param newDeck
+	 */
+	Dealer(Deck newDeck)
+	{
+		deck = newDeck;
+	}
+
+//HELP
+	/**
+	 * A method to get a card from the deck and put it in 
+	 * the player’s hand
+	 * @param player
+	 */
+	public void dealToPlayer(Player player)
+	{
+		
+	}
+	
+}//EOF

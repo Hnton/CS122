@@ -1,0 +1,90 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Manage players and bets, and play the game
+ * @author Mikael Hinton
+ *
+ */
+public class Table{
+	
+	// An Int that holds the bets from both players for each hand. 
+	//		Will initially be 0
+	private int pot = 0;
+	
+	// A two element array of Player objects. 
+	//		One is the dealer, and the other is the player
+	public ArrayList<Player> players = new ArrayList<>();
+	
+	// bet for each player
+	public static int bet;
+	
+	Scanner sc = new Scanner(System.in);
+	
+	/**
+	 * Constructor
+	 */
+	public Table()
+	{
+		
+		pot = 0;
+	}
+
+	
+	/**
+	 * A method to use each player’s scoreHand() results to pick a winner.  
+	 * @return
+	 */
+	public Player declareWinner()
+	{
+		if(players.get(0).scoreHand() > players.get(0).scoreHand())
+		{
+			return players.get(0);
+		}
+		else
+		{
+			return players.get(1);
+		}
+		//returns a player after comparing all player's scoreHand()
+	}
+
+	/**
+	 * A method to show all cards face up on the table. 
+	 *  Used after the last bet
+	 */
+	public void show()
+	{
+		players.get(0);
+	}
+	
+	/**
+	 * A method to ask the player for a bet,
+	 *  and if valid, get the same bet from the dealer
+	 */
+	public void getBets()
+	{
+		
+	}
+	
+	/**
+	 * A method to actually play the game 
+	 */
+	public void play()
+	{
+		//Loop Play
+		//	Is there any money
+		//	Do you want to bet
+		//	ante
+		//	Deal 1 card down and 1 card up
+		//	Get action
+		//		if action == bet
+		//			make bets
+		//			Deal next card
+		//			Get Action
+		//		if action = check
+		//			deal next card
+		//			get action
+		//		if action = fold
+		//			finish hand, player loses stash, dealer gets stash
+	}	
+}//EOF

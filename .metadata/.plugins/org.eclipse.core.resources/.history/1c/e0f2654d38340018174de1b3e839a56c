@@ -1,0 +1,318 @@
+/**
+ * 
+ * @author Mikael Hinton
+ *
+ */
+
+import java.text.DecimalFormat;
+import java.util.*;
+
+public class Checkout {
+	
+	public DecimalFormat MONEY = new DecimalFormat("$###.00");
+	public double TAX_RATE = 0.03;
+	private static ArrayList<Item> order;
+	private static Scanner sc;
+	
+	public static void main(String[] args) 
+	{
+		
+		
+		sc = new Scanner(System.in);
+		System.out.print("Enter Test mode?(y/n)\n");
+		String option = sc.nextLine();
+		//Switch to go from Main mode or Test mode
+		switch(option) {
+		//GOING INTO MAIN MODE
+		case "n":
+		case "N":
+		System.out.println("\t\t Tom's Diner Menu \t\t");
+		System.out.println("Drinks:");
+		System.out.println("\t 1. Coffee\t\t99 Cents");
+		System.out.println("\t 2. Small Soda (12 oz) \t99 Cents");
+		System.out.println("\t 3. Large Soda (18 oz) \t$1.50");
+		System.out.println("Side Dishes:");
+		System.out.println("\t 4. Salad\t\t\t$1.99");
+		System.out.println("\t 5. Green Beans\t\t$1.99");
+		System.out.println("\t 6. Rice\t\t\t$1.99");
+		System.out.println("Entrees:");
+		System.out.println("\t 7. 8 oz Steak\t\t99 Cents an ounce");
+		System.out.println("\t 8. 12 oz Steak\t\t99 Cents an ounce");
+		System.out.println("\t 9. 16 oz Steak\t\t$3.99 each");
+		System.out.println("\t10. Chicken Breast\t\t$3.99 each");
+		System.out.println("Desserts:");
+		System.out.println("\t11. Cake\t\t\t$1.99 a piece");
+		System.out.println("\t12. Ice Cream by the scoop\t99 Cents per scoop");
+		System.out.println("\t13. Sundae(Ice Cream by the scoop + toppings)");
+		System.out.println();
+		break;
+		
+		//GOING INTO TEST MODE
+		case "y":
+		case "Y":
+					// UNIT TEST MODE
+		System.out.println(" -----------------------------------------\n" + 
+				"--------------------------------------------");
+
+		System.out.println("\t\tTEST MODE");
+		System.out.println("---------------------------------------------\n" + 
+							" -----------------------------------------\n");
+				//START OF ITEM CLASS
+		System.out.println("\t\tItem Class");
+		System.out.println("\t\t----------");
+
+
+		
+		//Default constructor Item class
+		System.out.println("Default constructor in Item class");
+		System.out.println("---------------------------------");
+
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00");
+
+		Item item1 = new Item();
+		System.out.println("\tCode:\n" + item1);
+		System.out.println("");
+
+		
+		//Overloaded constructor Item class
+		System.out.println("Overloaded constructor in Item class");
+		System.out.println("------------------------------------");
+
+		System.out.println("\tCorrect:\nItem: Soda\nPrice: $1.99");
+		
+		Item item2 = new Item("Soda", 1.99);
+		System.out.println("\tCode: \n" + item2);
+		System.out.println("");
+		
+		//getPrice Method in Item class
+		System.out.println("Get price Method in Item class");
+		System.out.println("------------------------------");
+
+		System.out.println("\tCorrect:\nPrice: 2.75");
+		
+		Item item3 = new Item();
+		item3.setPrice(2.75);
+		System.out.println("\tCode:\nPrice: " + item3.getPrice());
+		System.out.println("");
+
+		//setPrice Method in Item class
+		System.out.println("Set Price Method in Item class");
+		System.out.println("------------------------------");
+
+		System.out.println("\tCorrect:\nPrice: 1.74");
+		
+		Item item4 = new Item();
+		item4.setPrice(1.74);
+		System.out.println("\tCode:\nPrice: " + item4.getPrice());
+		System.out.println("");
+		
+		//getName Method in Item class
+		System.out.println("Get Name Method in Item class");
+		System.out.println("-----------------------------");
+		
+		System.out.println("\tCorrect:\nItem: Large Soda (18 oz)");
+		
+		Item item5 = new Item();
+		item5.setName("Large Soda (18 oz)");
+		System.out.println("\tCode:\nItem: " +item5.getName());
+		System.out.println("");
+		
+		//SetName Method in Item class
+		System.out.println("Set Name Method in Item class");
+		System.out.println("-----------------------------");
+		
+		System.out.println("\tCorrect:\nItem: Small Soda (12 oz)");
+		
+		Item item6 = new Item();
+		item6.setName("Small Soda (12 oz)");
+		System.out.println("\tCode:\nItem: " + item6.getName());
+		System.out.println("");
+
+		//toString Method in Item class
+		System.out.println("To String Method in Item class");
+		System.out.println("------------------------------");
+		
+		System.out.println("\tCorrect:\nItem: Salad\nPrice: $1.99");
+		
+		Item item7 = new Item("Salad", 1.99);
+		
+		System.out.println("\tCode:\n" + item7.toString());
+		System.out.println("");
+		
+					// START OF SIZEABLETOPPINGITEM CLASS
+		System.out.println("\t\t SizeableToppingsItem Class");
+		System.out.println("\t\t --------------------------\n");
+
+
+		
+		//Default constructor in SizeableToppingsItem class
+		System.out.println("Default constructor in SizeableToppingsItem class");
+		System.out.println("-------------------------------------------------");
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00\nQuantity: 0\nToppings: []");
+		
+		Item item8 = new SizeableToppingsItem();
+		
+		System.out.println("\tCode:\n" + item8);
+		System.out.println("");
+
+		//Overloaded constructor in SizeableToppingsItem class
+		System.out.println("Overloaded constructor in SizeableToppingsItem class");
+		System.out.println("----------------------------------------------------");
+		
+		System.out.println("\tCorrect:\nItem:Ice Cream by the scoop\nPrice: $1.98\nQuantity: 2\nToppings: []");
+		
+		Item item9 = new SizeableToppingsItem("Ice Cream by the scoop", 2, 1.98);
+		
+		System.out.println("\tCode:");
+		System.out.println(item9);
+		System.out.println("");
+
+		//       HELP
+		/**
+		//ArrayList<Toppings> getToppings Method in SizeableToppingsItem class  
+		System.out.println("ArrayList<Toppings> Get Toppings method in SizeableToppingsItem class");
+		System.out.println("---------------------------------------------------------------------");
+		Topping top = Topping.Caramel;
+		ArrayList<Topping> item10 = new addTopping(Topping.Caramel);
+		addTopping();
+		System.out.println();
+		*/
+
+		//addTopping method in SizeableToppingsItem class
+		System.out.println("Add Toppings Method in SizeableToppingsItem class");
+		System.out.println("-------------------------------------------------");
+		
+		System.out.println("\tCorrect:\n" + "Item: No Item Available\n" +
+		"Price: $.50\n" + "Quantity: 0\n" + "Toppings: [Fudge]\n");
+		
+		SizeableToppingsItem item10 = new SizeableToppingsItem();
+		Topping ta = Topping.Fudge;
+		item10.addTopping(ta);
+		item10.getToppings();
+		System.out.println("\tCode:\n" + item10);
+		System.out.println("");
+
+		//removeTopping method in SizeableToppingsItem class
+		System.out.println("Remove Toppings Method in SizeableToppingsItem");
+		System.out.println("----------------------------------------------");
+		
+		SizeableToppingsItem item11 = new SizeableToppingsItem();
+		
+		System.out.println("\tCorrect:\n"
+				+ "Item: No Item Available\n"
+				+ "Price: $.00\nQuantity: 0\nToppings: []");
+		
+		
+		
+		item11.addTopping(ta);
+		System.out.println("\tCode:\n\n\tADDED TOPPING:\n" + item10 + "\n");
+		item11.removeTopping(ta);
+		item11.getToppings();
+		System.out.println("\tREMOVED TOPPING:\n" + item11);
+		System.out.println("");
+		
+		//to String method in SizeableToppingItem class
+		System.out.println("To String Method in SizeableToppingsItem");
+		System.out.println("----------------------------------------");
+		
+		SizeableToppingsItem item12 = new SizeableToppingsItem();
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.50\n" +
+							"Quantity: 0\nToppings: [Fudge]\n");
+		
+		item12.addTopping(ta);
+		System.out.println("\tCode:\n" + item12.toString());
+		System.out.println("");
+		
+				//START OF SIZEABLEITEM CLASS
+		System.out.println("\t\t SizeableItem Class");
+		System.out.println("\t\t ------------------\n");
+		System.out.println("");
+
+		//Default Constructor in SizeableItem class
+		System.out.println("Default Constructor in SizeableItem");
+		System.out.println("-----------------------------------");
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00\nQuantity: 0\n");
+
+		SizeableItem item13 = new SizeableItem();
+		
+		System.out.println("\tCode:\n" + item13);
+		System.out.println("");
+
+		//Overloaded Constructor in SizeableItem class
+		System.out.println("Overloaded Constructor in SizeableItem");
+		System.out.println("--------------------------------------");
+		
+		SizeableItem item14 = new SizeableItem("Rice", 3, 1.99);
+
+		System.out.println("\tCorrect:\nItem: Rice\nPrice: $1.99\nQuantity: 3\n");
+		
+		System.out.println("\tCode:\n" + item14);
+		System.out.println("");
+
+		//Get Quantity method in SizeableItem class
+		System.out.println("Get Quantity method in SizeableItem");
+		System.out.println("-----------------------------------");
+		
+		SizeableItem item15 = new SizeableItem();
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00\nQuantity: 4\n");
+		
+		item15.setQuantity(4);
+		item15.getQuantity();
+		
+		System.out.println("\tCode:\n" + item15);
+		System.out.println("");
+
+		//Set Quantity method in SizeableItem class
+		System.out.println("Set Quantity method in SizeableItem");
+		System.out.println("-----------------------------------");
+
+		SizeableItem item16 = new SizeableItem();
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00\nQuantity: 2\n");
+		
+		item16.setQuantity(2);
+		
+		System.out.println("\tCode:\n" + item16);
+		System.out.println("");
+		
+		//To String method in SizeableItem class
+		System.out.println("To String method in SizeableItem");
+		System.out.println("--------------------------------");
+		
+		SizeableItem item17 = new SizeableItem();
+		
+		System.out.println("\tCorrect:\nItem: No Item Available\nPrice: $.00\nQuantity: 0\n");
+		
+		System.out.println("\tCode:\n" + item17.toString());
+		break;
+	}
+}
+	
+	public void addItem()
+	{
+		
+	}
+	
+/** public double getPayment(double newPayment)
+	{
+		
+	return;
+	}
+	
+	public String calculateTips()
+	{
+	
+	return;
+	}
+	
+	public String printReceipt()
+	{
+		
+	return;
+	}
+**/
+}

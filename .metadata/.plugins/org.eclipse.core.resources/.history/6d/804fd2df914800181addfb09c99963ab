@@ -1,0 +1,104 @@
+import java.util.Scanner;
+
+/**
+ * Manage players and bets, and play the game
+ * @author Mikael Hinton
+ *
+ */
+public class Table{
+	
+	// An Int that holds the bets from both players for each hand. 
+	//		Will initially be 0
+	private int pot = 0;
+	
+	// A two element array of Player objects. 
+	//		One is the dealer, and the other is the player
+	int[] players = new int[2];
+	
+	// bet for each player
+	public static int bet;
+	
+	/**
+	 * A method to use each player’s scoreHand() results to pick a winner.  
+	 * @return
+	 */
+	public Player declareWinner()
+	{
+		Player winner = null;
+		
+		if(dealer.scoreHand(hand) == player.scoreHand(hand))
+		{
+			System.out.println("TIE");
+			winner = null;
+		}
+		if(dealer.scoreHand(hand) > player.scorehand(hand))
+		{
+			
+		}
+		
+		
+		//returns a player after comparing all player's scoreHand()
+	}
+
+	/**
+	 * A method to show all cards face up on the table. 
+	 *  Used after the last bet
+	 */
+	public void show()
+	{
+		
+	}
+	
+	/**
+	 * A method to ask the player for a bet,
+	 *  and if valid, get the same bet from the dealer
+	 */
+	public void getBets()
+	{
+		int pot = 0;
+		int bet = Player.bet();
+		
+	}
+	
+	/**
+	 * A method to actually play the game 
+	 */
+	public void play()
+	{
+		boolean play = true;
+		Scanner scan = new Scanner(System.in);
+		
+		while(play || Player.getStash() != 0)
+		{
+			for(int i = 0; i > 5; i++)
+			{
+				
+				Dealer.dealToPlayer();
+				System.out.println("Would you like to bet?");
+				
+				int input = scan.nextInt();
+				
+				switch(input)
+				{
+				case 1:
+					System.out.println("How much do you want to bet?");
+					int betInput = scan.nextInt();
+					player.bet(betInput);
+					break;
+				case 2:
+					System.out.println("NOt betting anything");
+					break;
+				case 3:
+					System.out.println("Player folds!");
+					player.fold();
+					break;
+				}
+			}
+		}
+		
+		
+		
+		
+		while
+	}	
+}//EOF

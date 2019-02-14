@@ -1,0 +1,424 @@
+/**
+ * Represents a player with a stash of money to bet, and a hand of cards
+ */
+
+import java.util.*;
+
+public class Player{
+
+	// a String that holds the player’s name, or the word Dealer
+	private String name;
+	// an Int that holds the money the player can bet with.  
+	//	It must be a positive number
+	private int stash;
+	// an ArrayList of cards that have been dealt to the player
+	private ArrayList<Card> h = new ArrayList<Card>();
+	
+	/**
+	 * Default constructor
+	 */
+	protected Player()
+	{
+		name = "UNKNWON";
+		stash = 0;
+	}
+	
+	/**
+	 * Constructor
+	 * @param newName
+	 * @param newStash
+	 */
+	protected Player(String newName, int newStash)
+	{
+		name = newName;
+		stash = newStash;
+	}
+
+	/**
+	 * getter for name
+	 * @return
+	 */
+	protected String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * getter for stash
+	 * @return
+	 */
+	protected int getStash()
+	{
+		return stash;
+	}
+
+	/**
+	 * setter for stash
+	 * @param newStash
+	 */
+	protected void setStash(int newStash)
+	{
+		stash = newStash;
+	}
+	/**
+	 * Setter for name
+	 * @param newName
+	 */
+	protected void setName(String newName)
+	{
+		name = newName;
+	}
+
+	/**
+	 * Get the bet for this round from the player.  
+	 * Return the Int of the bet, or -1 if the bet is 			
+	 * invalid (they bet more than they have, or bet a – number)
+	 * @return
+	 */
+	public int bet()
+	{
+		if(Table.betInput > stash || Table.betInput < 0 )
+		{
+			return -1;
+		}
+		else
+		{
+			stash = stash - Table.betInput;
+			return Table.betInput;
+		}
+	}
+	
+	/**
+	 * Give up this hand before the hand is done being dealt
+	 */
+	public void fold()
+	{
+		h.clear();
+	}
+
+	/**
+	 * Returns the size of the hand
+	 * @return
+	 */
+	protected int getHandSize() 
+	{
+		return h.size();
+ 	}	
+	
+//TEST
+	// Return an Integer with a score based
+	// 		on the hand
+	public int scorehand()
+	{
+		if(isFlush() && isStraight())
+		{
+			return 8;
+		}
+		else if(is4OfAKind())
+		{
+			return 7;
+		}
+		else if(isFullHouse())
+		{
+			return 6;
+		}
+		else if(isFlush())
+		{
+			return 5;
+		}
+		else if(isStraight())
+		{
+			return 4;
+		}
+		else if(is3OfAKind())
+		{
+			return 3;
+		}
+		else if(is2Pair())
+		{
+			return 2;
+		}
+		else if(is1Pair())
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	/**
+	 * Detects whether the hand contains a flush
+	 * @return
+	 */
+	protected boolean isFlush()
+	{		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		sortBySuit();
+		
+		return h.get(0).getSuit() == h.get(4).getSuit();
+		
+	}
+
+	/**
+	 * Detects whether the hand contains a straight
+	 * @return
+	 */
+	protected boolean isStraight()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		
+		sortByValue();
+		
+		if(h.get(4).getValue() == 14)
+		{
+			boolean a = h.get(0).getValue() == 2 && h.get(1).getValue() == 3 &&
+						h.get(2).getValue() == 4 && h.get(3).getValue() == 5;
+			
+			boolean b = h.get(0).getValue() == 10 && h.get(1).getValue() == 11 &&
+						h.get(2).getValue() == 12 && h.get(3).getValue() == 13;
+			
+			return (a || b);
+		}
+		else
+		{
+			int testValue = h.get(0).getValue() + 1;
+			
+			for(int i = 1; i < 5; i++)
+			{
+				if(h.get(i).getValue() != testValue)
+				{
+					return false;
+				}
+			testValue++;
+			}
+		return true;
+		}
+	}
+
+	/**
+	 * Detects whether the hand contains a four of a kind
+	 * @return
+	 */
+	protected boolean is4OfAKind()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+
+		boolean a1, a2;
+		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		
+		sortByValue();
+		
+		a1 = h.get(0).getValue() == h.get(1).getValue() &&
+			 h.get(1).getValue() == h.get(2).getValue() &&
+			 h.get(2).getValue() == h.get(3).getValue();
+		
+		a2 = h.get(1).getValue() == h.get(2).getValue() &&
+			 h.get(2).getValue() == h.get(3).getValue() &&
+			 h.get(3).getValue() == h.get(4).getValue();
+		
+		return (a1 || a2);
+	}
+	
+	/**
+	 * Detects whether the hand contains a full house
+	 * @return
+	 */
+	protected boolean isFullHouse()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+		
+		boolean a1, a2;
+		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+
+		sortByValue();
+		
+		a1 = h.get(0).getValue() == h.get(1).getValue() &&
+		     h.get(1).getValue() == h.get(2).getValue() &&
+		     h.get(3).getValue() == h.get(4).getValue();
+		
+		a2 = h.get(0).getValue() == h.get(1).getValue() &&
+			 h.get(2).getValue() == h.get(3).getValue() &&
+			 h.get(3).getValue() == h.get(4).getValue();
+		
+		return ( a1 || a2);
+	}
+
+	/**
+	 * Detects whether the hand contains a 3 of a kind
+	 * @return
+	 */
+	protected boolean is3OfAKind()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+
+		boolean a1, a2, a3 ;
+		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		
+		sortByValue();
+		
+		a1 = h.get(0).getValue() == h.get(1).getValue() &&
+			 h.get(1).getValue() == h.get(2).getValue() &&
+			 h.get(3).getValue() != h.get(0).getValue() &&
+			 h.get(4).getValue() != h.get(0).getValue() &&
+			 h.get(3).getValue() != h.get(4).getValue();
+
+		a2 = h.get(1).getValue() == h.get(2).getValue() &&
+			 h.get(2).getValue() == h.get(3).getValue() &&
+			 h.get(0).getValue() != h.get(1).getValue() &&
+			 h.get(4).getValue() != h.get(1).getValue() &&
+			 h.get(0).getValue() != h.get(4).getValue();
+		
+		a3 = h.get(2).getValue() == h.get(3).getValue() &&
+			 h.get(3).getValue() == h.get(4).getValue() &&
+			 h.get(0).getValue() != h.get(2).getValue() &&
+			 h.get(1).getValue() != h.get(2).getValue() &&
+			 h.get(0).getValue() != h.get(1).getValue();
+		
+		return ( a1 || a2 || a3);	
+	}
+
+	/**
+	 * Detects whether the hand contains 2 pair
+	 * @return
+	 */
+	protected boolean is2Pair()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+		
+		boolean a1, a2, a3;
+		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		
+		if(is4OfAKind() || isFullHouse() || is3OfAKind())
+		{
+			return false;
+		}
+		
+		sortByValue();
+		
+		a1 = h.get(0).getValue() == h.get(1).getValue() &&
+			 h.get(2).getValue() == h.get(3).getValue();
+		
+		a2 = h.get(0).getValue() == h.get(1).getValue() &&
+			 h.get(3).getValue() == h.get(4).getValue();
+		
+		a3 = h.get(1).getValue() == h.get(2).getValue() &&
+			 h.get(3).getValue() == h.get(4).getValue();
+		
+		return (a1 || a2 || a3);
+
+	}
+
+	/**
+	 * Detects whether the hand contains 1 pair
+	 * @return
+	 */
+	protected boolean is1Pair()
+	{
+		ArrayList<Card> h = new ArrayList<Card>();
+		
+		boolean a1, a2, a3, a4;
+		
+		if(h.size() != 5)
+		{
+			return false;
+		}
+		
+		if( is4OfAKind() || isFullHouse() || is3OfAKind() || is2Pair())
+		{
+			return false;
+		}
+
+		sortByValue();
+		
+		a1 = h.get(0).getValue() == h.get(1).getValue();
+		
+		a2 = h.get(1).getValue() == h.get(2).getValue();
+		
+		a3 = h.get(2).getValue() == h.get(3).getValue();
+
+		a4 = h.get(3).getValue() == h.get(4).getValue();
+
+		return (a1 || a2 || a3 || a4);
+		
+	}
+//TEST
+	/**
+	 * Return a String showing the player’s name and the cards in 
+	 * 		their hand, along with their stash of money
+	 */
+	public String toString()
+	{
+		return "Name: " + name + "\nHand: " + h + "\nStash: " + stash;
+	}
+//TEST
+	/**
+	 * Sorts the value of the cards in ascending order
+	 */
+	public void sortByValue()
+	{		
+		for(int i = 0; i < h.size(); i++)
+		{
+			int min_j = i;
+			
+			for(int j = i + 1; j < h.size(); j++)
+			{
+				if(h.get(j).getValue() < h.get(min_j).getValue())
+				{
+					min_j = j;
+				}
+			}	
+		Card temp = h.get(min_j);
+		h.set(i, h.get(min_j));
+		h.set(min_j, temp);
+		}
+	 }
+//TEST
+	/**
+	 * Sorts the Suit of the cards in ascending order
+	 */
+	public void sortBySuit()
+	{	
+		for(int i = 0; i < h.size(); i++)
+		{
+			int min_j = i;
+			
+			for(int j = i + 1; j < h.size(); j++)
+			{
+				if(h.get(j).getSuit().ordinal() < h.get(min_j).getSuit().ordinal())
+				{
+					min_j = j;
+				}
+			}
+		Card temp = h.get(min_j);
+		h.set(i, h.get(min_j));
+		h.set(min_j, temp);
+		}
+
+	}
+}//EOF

@@ -1,0 +1,8 @@
+1517286394455	Delete element
+1517286614071	Delete element
+1517286690112	Convert local variable 'scanner' to field
+1517286962717	Convert local variable 'keyboard' to field
+1517287116015	Delete element
+1517287631759	Extract local variable 'scanner'
+1517287712966	Extract local variable 'scanner'
+1517291894303	Inline local variable 's'
